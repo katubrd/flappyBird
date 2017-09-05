@@ -1,13 +1,22 @@
-const canvas = document.getElementById('canvas');
-canvas.width = window.innerWidth;
-canvas.height = 600;
+window.onload = function(){
+  const canvas = document.getElementById('canvas');
+  canvas.width = window.innerWidth;
+  canvas.height = 600;
 
-const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d');
 
-ctx.fillRect(100, 200, 400, 150);
+  const environment = new Environment(canvas, ctx);
+  const bird = new Bird(100, 250, ctx);
+  gameLoop();
 
-const bird1 = new Image();
-bird1.src = '../img/ptah.svg';
-bird1.onload = function(){
-  ctx.drawImage(bird1, 500, 20);
+  ctx.fillStyle = "#fff";
+  function gameLoop(){
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    environment.update();
+    environment.render();
+    bird.update();
+    bird.render();
+    window.requestAnimationFrame(gameLoop);
+  }
+
 };
